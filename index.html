@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpyCode - Home</title>
+    <title>SpyCode - Malware Analysis</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,23 +16,35 @@
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#supported-malware">Supported Malware</a></li>
+                <li><a href="#status">Status</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Welcome to SpyCode</h1>
-        <p>Your tool for secure code management</p>
-    </section>
+    <!-- Malware Analysis Dashboard -->
+    <section class="dashboard">
+        <h1>Malware Analysis Dashboard</h1>
+        <div class="input-section">
+            <label for="file-link">Enter Mega/GoFile/Discord/MediaFire link</label>
+            <input type="url" id="file-link" placeholder="Paste file link here">
+        </div>
 
-    <!-- Drag-and-Drop Area -->
-    <section class="drag-and-drop">
-        <div id="drop-area">
-            <p>Drag and drop your files here, or click to select files</p>
-            <input type="file" id="file-input" multiple />
+        <!-- Drag-and-Drop Section -->
+        <div class="drag-and-drop">
+            <div id="drop-area">
+                <p>Drag and drop your file here or click to select</p>
+                <input type="file" id="file-input" multiple />
+            </div>
+        </div>
+
+        <!-- File Analysis -->
+        <div class="file-analysis">
+            <button id="analyze-btn">Analyze File</button>
+            <div id="analysis-result" class="hidden">
+                <!-- Results will be shown here after analysis -->
+                <p>Analysis results will be displayed here.</p>
+            </div>
         </div>
     </section>
 
