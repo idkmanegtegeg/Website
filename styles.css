@@ -5,15 +5,14 @@
     box-sizing: border-box;
 }
 
-/* Body and Layout */
+/* Body */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     color: #333;
-    line-height: 1.6;
 }
 
-/* Header Styling */
+/* Header */
 header {
     display: flex;
     justify-content: space-between;
@@ -41,29 +40,32 @@ header nav ul li a {
     font-weight: bold;
 }
 
-/* Hero Section */
-.hero {
+/* Dashboard Section */
+.dashboard {
     text-align: center;
-    padding: 100px 20px;
-    background-color: #4caf50;
-    color: white;
+    padding: 50px 20px;
 }
 
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
+.dashboard h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
 }
 
-.hero p {
-    font-size: 1.2rem;
+.input-section {
+    margin-bottom: 30px;
 }
 
-/* Drag-and-Drop Section */
+.input-section input {
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 .drag-and-drop {
-    display: flex;
-    justify-content: center;
-    padding: 50px 0;
-    background-color: white;
+    margin-bottom: 30px;
 }
 
 #drop-area {
@@ -77,6 +79,7 @@ header nav ul li a {
     align-items: center;
     text-align: center;
     cursor: pointer;
+    margin: 0 auto;
 }
 
 #drop-area p {
@@ -84,7 +87,38 @@ header nav ul li a {
     font-size: 1.2rem;
 }
 
-/* Footer Styling */
+/* File Analysis Section */
+.file-analysis {
+    margin-top: 30px;
+}
+
+#analyze-btn {
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#analyze-btn:hover {
+    background-color: #45a049;
+}
+
+#analysis-result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    display: none;
+    text-align: left;
+}
+
+#analysis-result.hidden {
+    display: none;
+}
+
 footer {
     background-color: #333;
     color: white;
