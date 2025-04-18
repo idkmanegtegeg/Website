@@ -1,159 +1,54 @@
-/* Basic Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SpyCode – Malware Analysis</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo"><img src="logo.png" alt="SpyCode Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#supported-malware">Supported Malware</a></li>
+        <li><a href="#status">Status</a></li>
+      </ul>
+    </nav>
+  </header>
 
-/* Body */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-}
+  <main class="main-container">
+    <div class="dashboard-card">
+      <h1>Malware Analysis Dashboard</h1>
 
-/* Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 20px;
-}
+      <div class="input-group">
+        <input
+          type="url"
+          id="file-link"
+          placeholder="Enter Mega/GoFile/Discord/MediaFire link"
+        />
+      </div>
 
-header .logo img {
-    max-width: 150px;
-}
+      <div class="separator"><span>or</span></div>
 
-header nav ul {
-    display: flex;
-    list-style: none;
-}
+      <div id="drop-area" class="drop-area">
+        <p>Drag and drop your file here or 
+          <button id="select-file-btn" class="select-btn">click to select</button>
+        </p>
+        <input type="file" id="file-input" multiple hidden>
+      </div>
 
-header nav ul li {
-    margin-left: 20px;
-}
+      <button id="analyze-btn" class="analyze-btn">Analyze File</button>
+      <div id="analysis-result" class="analysis-result hidden"></div>
+    </div>
+  </main>
 
-header nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
+  <footer>
+    <p>© 2025 SpyCode. All Rights Reserved.</p>
+  </footer>
 
-/* Dashboard Section */
-.dashboard {
-    text-align: center;
-    padding: 50px 20px;
-}
-
-.dashboard h1 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-}
-
-.input-section {
-    margin-bottom: 30px;
-}
-
-.input-section input {
-    padding: 10px;
-    width: 100%;
-    max-width: 400px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Drag-and-Drop Section */
-.drag-and-drop {
-    margin-bottom: 30px;
-    position: relative;
-    display: inline-block;
-}
-
-#drop-area {
-    width: 100%;
-    max-width: 600px;
-    height: 250px;
-    border: 2px dashed #4caf50;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    cursor: pointer;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-}
-
-#drop-area p {
-    color: #4caf50;
-    font-size: 1.2rem;
-    margin: 10px 0;
-}
-
-/* Hidden File Input */
-#file-input {
-    display: none;  /* Hide the file input */
-}
-
-/* Drop Area Inner Message */
-#drop-message p {
-    color: #4caf50;
-    font-size: 1.1rem;
-}
-
-#select-file-btn {
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#select-file-btn:hover {
-    background-color: #45a049;
-}
-
-/* File Analysis Section */
-.file-analysis {
-    margin-top: 30px;
-}
-
-#analyze-btn {
-    padding: 15px 25px;
-    font-size: 1.1rem;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#analyze-btn:hover {
-    background-color: #45a049;
-}
-
-#analysis-result {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    display: none;
-    text-align: left;
-}
-
-#analysis-result.hidden {
-    display: none;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
+  <script src="scripts.js"></script>
+</body>
+</html>
