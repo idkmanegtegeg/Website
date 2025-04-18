@@ -66,6 +66,8 @@ header nav ul li a {
 
 .drag-and-drop {
     margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
 }
 
 #drop-area {
@@ -85,6 +87,11 @@ header nav ul li a {
 #drop-area p {
     color: #4caf50;
     font-size: 1.2rem;
+}
+
+/* File Input Hidden */
+#file-input {
+    display: none;  /* Hide the file input */
 }
 
 /* File Analysis Section */
