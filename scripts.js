@@ -1,6 +1,8 @@
-// Get the drop area and input
+// Get the drop area, file input, and analysis button
 const dropArea = document.getElementById('drop-area');
 const fileInput = document.getElementById('file-input');
+const analyzeBtn = document.getElementById('analyze-btn');
+const analysisResult = document.getElementById('analysis-result');
 
 // Prevent default behavior (Prevent file from being opened)
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -20,7 +22,7 @@ const fileInput = document.getElementById('file-input');
 // Handle file drop
 dropArea.addEventListener('drop', handleDrop, false);
 
-// Handle file input click (to select files)
+// Handle file input change (when user selects a file)
 fileInput.addEventListener('change', handleFileSelect, false);
 
 // Prevent default behavior for dragging and dropping
@@ -29,12 +31,12 @@ function preventDefaults(e) {
     e.stopPropagation();
 }
 
-// Highlight the drop area when dragging over
+// Highlight drop area
 function highlight() {
     dropArea.style.borderColor = '#2e7d32';
 }
 
-// Unhighlight the drop area when file leaves
+// Remove highlight
 function unhighlight() {
     dropArea.style.borderColor = '#4caf50';
 }
@@ -45,15 +47,22 @@ function handleDrop(e) {
     handleFiles(files);
 }
 
-// Handle file input change (file selection)
+// Handle file input change
 function handleFileSelect(e) {
     const files = e.target.files;
     handleFiles(files);
 }
 
-// Process the files (you can display or upload them)
+// Process the files (you can add analysis logic here)
 function handleFiles(files) {
     if (files.length > 0) {
         alert(`You selected ${files.length} file(s)!`);
     }
 }
+
+// Handle the analyze button click
+analyzeBtn.addEventListener('click', () => {
+    // Simulate the analysis result
+    analysisResult.classList.remove('hidden');
+    analysisResult.innerHTML = "<h3>Analysis Results</h3><p>File analysis in progress...</p>";
+});
