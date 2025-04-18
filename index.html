@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SpyCode – Malware Analysis</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpyCode - Malware Analysis</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div class="logo"><img src="logo.png" alt="SpyCode Logo"></div>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#supported-malware">Supported Malware</a></li>
-        <li><a href="#status">Status</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="SpyCode Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#supported-malware">Supported Malware</a></li>
+                <li><a href="#status">Status</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main class="main-container">
-    <div class="dashboard-card">
-      <h1>Malware Analysis Dashboard</h1>
+    <!-- Malware Analysis Dashboard -->
+    <section class="dashboard">
+        <h1>Malware Analysis Dashboard</h1>
+        <div class="input-section">
+            <label for="file-link">Enter Mega/GoFile/Discord/MediaFire link</label>
+            <input type="url" id="file-link" placeholder="Paste file link here">
+        </div>
 
-      <div class="input-group">
-        <input
-          type="url"
-          id="file-link"
-          placeholder="Enter Mega/GoFile/Discord/MediaFire link"
-        />
-      </div>
+        <!-- Drag-and-Drop Section -->
+        <div class="drag-and-drop">
+            <div id="drop-area">
+                <p>Drag and drop your file here or click to select</p>
+                <input type="file" id="file-input" multiple />
+            </div>
+        </div>
 
-      <div class="separator"><span>or</span></div>
+        <!-- File Analysis -->
+        <div class="file-analysis">
+            <button id="analyze-btn">Analyze File</button>
+            <div id="analysis-result" class="hidden">
+                <!-- Results will be shown here after analysis -->
+                <p>Analysis results will be displayed here.</p>
+            </div>
+        </div>
+    </section>
 
-      <div id="drop-area" class="drop-area">
-        <p>Drag and drop your file here or 
-          <button id="select-file-btn" class="select-btn">click to select</button>
-        </p>
-        <input type="file" id="file-input" multiple hidden>
-      </div>
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2025 SpyCode. All Rights Reserved.</p>
+    </footer>
 
-      <button id="analyze-btn" class="analyze-btn">Analyze File</button>
-      <div id="analysis-result" class="analysis-result hidden"></div>
-    </div>
-  </main>
-
-  <footer>
-    <p>© 2025 SpyCode. All Rights Reserved.</p>
-  </footer>
-
-  <script src="scripts.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
