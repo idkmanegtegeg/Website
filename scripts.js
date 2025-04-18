@@ -1,73 +1,41 @@
-// Get the drop area, file input, and analysis button
-const dropArea = document.getElementById('drop-area');
-const fileInput = document.getElementById('file-input');
+const dropArea   = document.getElementById('drop-area');
+const fileInput  = document.getElementById('file-input');
+const selectBtn  = document.getElementById('select-file-btn');
 const analyzeBtn = document.getElementById('analyze-btn');
-const analysisResult = document.getElementById('analysis-result');
+const resultBox  = document.getElementById('analysis-result');
 
-// Prevent default behavior (Prevent file from being opened)
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-    dropArea.addEventListener(eventName, preventDefaults, false);
-});
+// Prevent defaults on drag events
+['dragenter','dragover','dragleave','drop'].forEach(evt =>
+  dropArea.addEventListener(evt, e => {
+    e.preventDefault(); e.stopPropagation();
+  })
+);
 
-// Highlight the drop area when a file is dragged over
-['dragenter', 'dragover'].forEach(eventName => {
-    dropArea.addEventListener(eventName, highlight, false);
-});
+// Highlight on dragover
+['dragenter','dragover'].forEach(evt =>
+  dropArea.addEventListener(evt, () => dropArea.classList.add('dragover'))
+);
+['dragleave','drop'].forEach(evt =>
+  dropArea.addEventListener(evt, () => dropArea.classList.remove('dragover'))
+);
 
-// Remove highlight when file leaves the drop area
-['dragleave', 'drop'].forEach(eventName => {
-    dropArea.addEventListener(eventName, unhighlight, false);
-});
+// Handle drop
+dropArea.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
 
-// Handle file drop
-dropArea.addEventListener('drop', handleDrop, false);
+// Click-to-select
+selectBtn.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
 
-// Handle file input change (when user selects a file)
-fileInput.addEventListener('change', handleFileSelect, false);
-
-// Handle click on the drop area to trigger file selection
-dropArea.addEventListener('click', () => {
-    fileInput.click();  // Trigger file input when the drop area is clicked
-});
-
-// Prevent default behavior for dragging and dropping
-function preventDefaults(e) {
-    e.preventDefault();
-    e.stopPropagation();
-}
-
-// Highlight drop area
-function highlight() {
-    dropArea.style.borderColor = '#2e7d32';
-}
-
-// Remove highlight
-function unhighlight() {
-    dropArea.style.borderColor = '#4caf50';
-}
-
-// Handle file drop
-function handleDrop(e) {
-    const files = e.dataTransfer.files;
-    handleFiles(files);
-}
-
-// Handle file input change
-function handleFileSelect(e) {
-    const files = e.target.files;
-    handleFiles(files);
-}
-
-// Process the files (you can add analysis logic here)
 function handleFiles(files) {
-    if (files.length > 0) {
-        alert(`You selected ${files.length} file(s)!`);
-    }
+  if (!files || files.length === 0) return;
+  // show filename(s)
+  resultBox.classList.remove('hidden');
+  resultBox.innerHTML = `<h3>Files Selected (${files.length})</h3>
+    <ul>${[...files].map(f => `<li>${f.name}</li>`).join('')}</ul>`;
 }
 
-// Handle the analyze button click
+// Stub for Analyze
 analyzeBtn.addEventListener('click', () => {
-    // Simulate the analysis result
-    analysisResult.classList.remove('hidden');
-    analysisResult.innerHTML = "<h3>Analysis Results</h3><p>File analysis in progress...</p>";
+  resultBox.classList.remove('hidden');
+  resultBox.innerHTML = `<h3>Analysis Results</h3><p>Processing…</p>`;
 });
