@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UncoverIt Clone</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 300px;
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1rem;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1c86ee;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 1.1rem;
+      color: #9acd32;
+    }
+  </style>
+</head>
+<body>
+  <h1>UncoverIt Clone</h1>
+  <input type="text" id="linkInput" placeholder="Paste your link here..." />
+  <button onclick="bypassLink()">Uncover</button>
+  <div id="result"></div>
+
+  <script>
+    async function bypassLink() {
+      const url = document.getElementById("linkInput").value;
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerText = "Processing...";
+
+      try {
+        const response = await fetch(`https://bypass.city/api?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        if (data.destination) {
+          resultDiv.innerHTML = `✅ Bypassed URL: <a href="${data.destination}" target="_blank">${data.destination}</a>`;
+        } else {
+          resultDiv.innerText = "❌ Could not bypass the link.";
+        }
+      } catch (err) {
+        resultDiv.innerText = "❌ An error occurred.";
+      }
+    }
+  </script>
+</body>
+</html>
