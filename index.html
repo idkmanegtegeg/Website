@@ -25,15 +25,21 @@
     <!-- Malware Analysis Dashboard -->
     <section class="dashboard">
         <h1>Malware Analysis Dashboard</h1>
+        
+        <!-- Link Input Section -->
         <div class="input-section">
             <label for="file-link">Enter Mega/GoFile/Discord/MediaFire link</label>
             <input type="url" id="file-link" placeholder="Paste file link here">
         </div>
 
-        <!-- Drag-and-Drop Section (Click to select file) -->
+        <!-- Drag-and-Drop Section -->
         <div class="drag-and-drop">
             <div id="drop-area">
-                <p>Drag and drop your file here or click to select</p>
+                <div id="drop-message">
+                    <p>Drag and drop your file here</p>
+                    <p>or</p>
+                    <button id="select-file-btn">Click to Select File</button>
+                </div>
                 <input type="file" id="file-input" multiple />
             </div>
         </div>
