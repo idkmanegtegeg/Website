@@ -25,6 +25,11 @@ dropArea.addEventListener('drop', handleDrop, false);
 // Handle file input change (when user selects a file)
 fileInput.addEventListener('change', handleFileSelect, false);
 
+// Handle click on the drop area to trigger file selection
+dropArea.addEventListener('click', () => {
+    fileInput.click();  // Trigger file input when the drop area is clicked
+});
+
 // Prevent default behavior for dragging and dropping
 function preventDefaults(e) {
     e.preventDefault();
