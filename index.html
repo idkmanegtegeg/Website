@@ -3,56 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpyCode - Malware Analysis</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Malware Analysis Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #00ff9d;
+        }
+
+        .input-section {
+            background: #2d2d2d;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .link-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #404040;
+            border: 1px solid #00ff9d;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .upload-area {
+            border: 2px dashed #00ff9d;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            margin: 2rem 0;
+            transition: 0.3s;
+        }
+
+        .upload-area:hover {
+            background: #363636;
+        }
+
+        .analysis-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .analysis-table td, .analysis-table th {
+            padding: 1rem;
+            border: 1px solid #404040;
+            text-align: left;
+        }
+
+        .analysis-table th {
+            background: #2d2d2d;
+        }
+
+        .or-separator {
+            text-align: center;
+            margin: 1rem 0;
+            color: #00ff9d;
+        }
+
+        button {
+            background: #00ff9d;
+            color: #1a1a1a;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <div class="logo">
-            <img src="logo.png" alt="SpyCode Logo">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#supported-malware">Supported Malware</a></li>
-                <li><a href="#status">Status</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Malware Analysis Dashboard -->
-    <section class="dashboard">
+    <div class="container">
         <h1>Malware Analysis Dashboard</h1>
+        
         <div class="input-section">
-            <label for="file-link">Enter Mega/GoFile/Discord/MediaFire link</label>
-            <input type="url" id="file-link" placeholder="Paste file link here">
-        </div>
-
-        <!-- Drag-and-Drop Section -->
-        <div class="drag-and-drop">
-            <div id="drop-area">
-                <p>Drag and drop your file here or click to select</p>
-                <input type="file" id="file-input" multiple />
+            <input type="text" class="link-input" placeholder="Enter MediaFire link">
+            <button>Analyze Link</button>
+            
+            <div class="or-separator">OR</div>
+            
+            <div class="upload-area" id="dropZone">
+                <h3>Upload Files</h3>
+                <p>Drag & drop or click to select</p>
+                <input type="file" id="fileInput" hidden multiple>
             </div>
+
+            <table class="analysis-table">
+                <tr>
+                    <th>Total Size:</th>
+                    <th>Average Size:</th>
+                    <th>Largest File:</th>
+                    <th>Smallest File:</th>
+                </tr>
+                <tr>
+                    <td>0.00 MB</td>
+                    <td>0.00 MB</td>
+                    <td>N/A (0.00 MB)</td>
+                    <td>N/A (0.00 MB)</td>
+                </tr>
+            </table>
         </div>
+    </div>
 
-        <!-- File Analysis -->
-        <div class="file-analysis">
-            <button id="analyze-btn">Analyze File</button>
-            <div id="analysis-result" class="hidden">
-                <!-- Results will be shown here after analysis -->
-                <p>Analysis results will be displayed here.</p>
-            </div>
-        </div>
-    </section>
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const analysisCells = document.querySelectorAll('.analysis-table td');
 
-    <!-- Footer Section -->
-    <footer>
-        <p>© 2025 SpyCode. All Rights Reserved.</p>
-    </footer>
+        // Handle drag & drop
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = '#363636';
+        });
 
-    <script src="scripts.js"></script>
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.backgroundColor = 'transparent';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'transparent';
+            handleFiles(e.dataTransfer.files);
+        });
+
+        // Handle file selection
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length === 0) return;
+            
+            let totalSize = 0;
+            let sizes = [];
+            
+            Array.from(files).forEach(file => {
+                totalSize += file.size;
+                sizes.push(file.size);
+            });
+
+            const averageSize = totalSize / files.length;
+            const largest = Math.max(...sizes);
+            const smallest = Math.min(...sizes);
+
+            analysisCells[0].textContent = `${(totalSize / 1024 / 1024).toFixed(2)} MB`;
+            analysisCells[1].textContent = `${(averageSize / 1024 / 1024).toFixed(2)} MB`;
+            analysisCells[2].textContent = `${files[0].name} (${(largest / 1024 / 1024).toFixed(2)} MB)`;
+            analysisCells[3].textContent = `${files[0].name} (${(smallest / 1024 / 1024).toFixed(2)} MB)`;
+        }
+    </script>
 </body>
 </html>
