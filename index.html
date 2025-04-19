@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Script Executor</title>
+    <title>Roblox Executor</title>
     <style>
         * {
             margin: 0;
@@ -13,8 +13,8 @@
         }
 
         body {
-            background-color: #1a1a1a;
-            color: #ffffff;
+            background: #1a1a2f;
+            color: #fff;
             min-height: 100vh;
             padding: 2rem;
         }
@@ -22,70 +22,57 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
+            border: 2px solid #3d3d5f;
+            border-radius: 8px;
+            background: #252542;
         }
 
         .toolbar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #2d2d4a;
+            border-bottom: 2px solid #3d3d5f;
         }
 
         button {
-            background: #00ff9d;
-            color: #1a1a1a;
+            background: #4b6baf;
+            color: #fff;
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            margin-right: 1rem;
+            transition: all 0.3s;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0, 255, 157, 0.3);
-        }
-
-        .editor-container {
-            border: 2px solid #2d2d2d;
-            border-radius: 6px;
-            overflow: hidden;
+            background: #5b7bbf;
+            box-shadow: 0 0 8px rgba(91, 123, 191, 0.4);
         }
 
         #editor {
             width: 100%;
             height: 400px;
-            background-color: #2d2d2d;
-            color: #ffffff;
+            background: #1a1a2f;
+            color: #fff;
             padding: 1.5rem;
             border: none;
             resize: vertical;
             font-size: 14px;
-            line-height: 1.5;
-        }
-
-        #editor:focus {
-            outline: none;
-            border-color: #00ff9d;
-        }
-
-        .output-container {
-            margin-top: 1rem;
-            background-color: #2d2d2d;
-            border-radius: 6px;
-            padding: 1rem;
-            min-height: 150px;
-        }
-
-        .output-title {
-            color: #00ff9d;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
         }
 
         #output {
+            background: #1a1a1a;
+            padding: 1rem;
+            min-height: 150px;
+            border-top: 2px solid #3d3d5f;
             white-space: pre-wrap;
-            font-family: 'Consolas', monospace;
+        }
+
+        .status-bar {
+            padding: 0.5rem 1rem;
+            background: #2d2d4a;
+            color: #4b6baf;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -93,39 +80,59 @@
     <div class="container">
         <div class="toolbar">
             <button onclick="newScript()">New Script</button>
-            <button onclick="executeScript()">Execute</button>
+            <button onclick="execute()" id="executeBtn">Execute</button>
+            <span class="status-bar">Status: Ready</span>
         </div>
         
-        <div class="editor-container">
-            <textarea id="editor" placeholder="-- Enter your script here..."></textarea>
-        </div>
-
-        <div class="output-container">
-            <div class="output-title">Output:</div>
-            <div id="output"></div>
-        </div>
+        <textarea id="editor" placeholder="-- Roblox Lua Script Here\nprint('Hello Roblox!')"></textarea>
+        
+        <div id="output"></div>
     </div>
 
+    <!-- Lua interpreter for browser -->
+    <script src="https://fengari.io/web.js"></script>
     <script>
+        const luaVM = fengari.load_lib();
+        const editor = document.getElementById('editor');
+        const output = document.getElementById('output');
+        const statusBar = document.querySelector('.status-bar');
+
         function newScript() {
-            document.getElementById('editor').value = '';
-            document.getElementById('output').textContent = '';
+            editor.value = '';
+            output.textContent = '';
+            updateStatus('Ready');
         }
 
-        function executeScript() {
-            const script = document.getElementById('editor').value;
-            const output = document.getElementById('output');
-            
+        function execute() {
             try {
-                // For security reasons, use a proper execution environment in real applications
-                const result = eval(script); // WARNING: Only for demonstration purposes
-                output.textContent = result || 'Script executed successfully';
-                output.style.color = '#00ff9d';
+                output.textContent = '';
+                updateStatus('Executing...');
+                
+                // Create new Lua environment
+                const env = fengari.new_thread();
+                
+                // Redirect print to output
+                env.set('print', function(...) {
+                    output.textContent += Array.prototype.join.call(arguments, '\t') + '\n';
+                });
+
+                // Execute script
+                const chunk = fengari.load(editor.value, '@roblox');
+                fengari.pcall(chunk, env);
+                
+                updateStatus('Execution completed');
             } catch (error) {
                 output.textContent = `Error: ${error.message}`;
-                output.style.color = '#ff5555';
+                updateStatus('Execution failed');
             }
         }
+
+        function updateStatus(message) {
+            statusBar.textContent = `Status: ${message}`;
+        }
+
+        // Example script
+        editor.value = `-- Basic Roblox Lua example\nprint("Welcome to Roblox Executor!")\nfor i=1,3 do\n    print("Count:", i)\nend`;
     </script>
 </body>
 </html>
